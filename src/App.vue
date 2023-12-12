@@ -1,19 +1,19 @@
 <script setup></script>
 
 <template>
-  <section>
-    <h1>Assignment Undone({{ assignment.filter((a) => !a.completed).length }})</h1>
+  <section v-show = "unCompletedAssignments.length">
+    <h1>Assignment Undone({{ unCompletedAssignments.length }})</h1>
     <ul>
-      <li v-for="ret in assignment.filter((a) => !a.completed)" :key="ret.id">
+      <li v-for="ret in unCompletedAssignments" :key="ret.id">
         {{ ret.name }} <input type="checkbox" v-model="ret.completed" />
       </li>
     </ul>
   </section>
-
-  <section>
-    <h1>Assignment Done({{ assignment.filter((a) => a.completed).length }})</h1>
+  <br>
+  <section v-if = "completedAssignments.length > 0">
+    <h1>Assignment Done({{ completedAssignments.length }})</h1>
     <ul>
-      <li v-for="ret in assignment.filter((a) => a.completed)" :key="ret.id">
+      <li v-for="ret in completedAssignments" :key="ret.id">
         {{ ret.name }}
         <input type="checkbox" v-model="ret.completed" />
       </li>
@@ -33,5 +33,13 @@ export default {
       ],
     };
   },
+  computed:{
+    completedAssignments(){
+      return this.assignment.filter((a) => a.completed);
+    },
+    unCompletedAssignments(){
+      return this.assignment.filter((a) => !a.completed);
+    },
+  }
 };
 </script>
